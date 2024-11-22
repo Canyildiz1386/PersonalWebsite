@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>can yildiz</title>
+<!-- Include React and Babel via CDN -->
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<!-- Include CSS Framework -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+function App() {
+    return (
+        <div>
+            <div className="ui inverted vertical masthead center aligned segment">
+                <div className="ui container">
+                    <div className="ui large secondary inverted pointing menu">
+                        <a className="active item">Home</a>
+                        <a className="item">About</a>
+                        <a className="item">Projects</a>
+                        <a className="item">Contact</a>
+                    </div>
+                </div>
+                <div className="ui text container">
+                    <h1 className="ui inverted header">
+                        Hello, I'm <span className="ui header">can yildiz</span>
+                    </h1>
+                    <h2>I'm a programmer.</h2>
+                </div>
+            </div>
+
+            <div className="ui vertical stripe segment">
+                <div className="ui middle aligned stackable grid container">
+                    <div className="row">
+                        <div className="eight wide column">
+                            <h3 className="ui header">About Me</h3>
+                            <p>I am a programmer specializing in modern web development technologies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="ui vertical stripe quote segment">
+                <div className="ui equal width stackable internally celled grid">
+                    <div className="center aligned row">
+                        <div className="column">
+                            <h3>"First Project"</h3>
+                            <p>Description of the first project.</p>
+                        </div>
+                        <div className="column">
+                            <h3>"Second Project"</h3>
+                            <p>Description of the second project.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="ui inverted vertical footer segment">
+                <div className="ui container">
+                    <div className="ui stackable inverted divided grid">
+                        <div className="three wide column">
+                            <h4 className="ui inverted header">Links</h4>
+                            <div className="ui inverted link list">
+                                <a href="#" className="item">GitHub</a>
+                                <a href="#" className="item">LinkedIn</a>
+                                <a href="#" className="item">Email</a>
+                            </div>
+                        </div>
+                        <div className="seven wide column">
+                            <h4 className="ui inverted header">Get in Touch</h4>
+                            <p>Feel free to reach out for collaborations or just a friendly hello!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+</script>
+
+</body>
+</html>
