@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>طراحی عطر شخصی‌سازی‌شده</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *{
+            font-family: 'Vazirmatn', sans-serif !important;
+        }
+        body {
+            margin: 0;
+            font-family: 'Vazirmatn', sans-serif !important;
+            background-color: #000000;
+            color: #ffffff;
+            direction: rtl;
+        }
+        header {
+            background-color: #1e1e1e;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            color: #ff4757;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a, nav button {
+            background-color: #1e90ff;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 25px;
+            font-size: 1em;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        nav a:hover, nav button:hover {
+            background-color: #3742fa;
+        }
+        .container {
+            padding: 30px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .hidden {
+            display: none;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        select, input[type="text"], textarea, input[type="password"], input[type="file"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #2c2c2c;
+            color: #ffffff;
+            font-size: 1em;
+            transition: border 0.3s;
+        }
+        select:focus, input[type="text"]:focus, textarea:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="number"]:focus {
+            border: 1px solid #ff4757;
+            outline: none;
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        button.submit-btn, button.login-btn, button.upload-btn, button.update-btn {
+            background-color: #ff4757;
+            border: none;
+            padding: 12px 25px;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 25px;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        button.submit-btn:hover, button.login-btn:hover, button.upload-btn:hover, button.update-btn:hover {
+            background-color: #ff6b81;
+        }
+        .result {
+            background-color: #2c2c2c;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(255,71,87,0.5);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        table, th, td {
+            border: 1px solid #444;
+        }
+        th, td {
+            padding: 10px;
+            text-align: right;
+        }
+        th {
+            background-color: #ff4757;
+            color: #ffffff;
+        }
+        tr:nth-child(even) {
+            background-color: #3a3a3a;
+        }
+        .flash-message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .flash-message.success {
+            background-color: #1e90ff;
+            color: #ffffff;
+        }
+        .flash-message.error {
+            background-color: #ff4757;
+            color: #ffffff;
+        }
+        .accordion {
+            margin-bottom: 20px;
+        }
+        .accordion-item {
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .accordion-header {
+            padding: 15px;
+            cursor: pointer;
+            background-color: #1e90ff;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .accordion-content {
+            display: none;
+            padding: 15px;
+            background-color: #3a3a3a;
+        }
+        .accordion-content form {
+            margin-top: 10px;
+        }
+        .accordion-content button {
+            margin-top: 10px;
+        }
+        .add-question-form {
+            background-color: #2c2c2c;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(30,144,255,0.5);
+        }
+        .add-question-form h3 {
+            margin-top: 0;
+            color: #1e90ff;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-left: 10px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const headers = document.querySelectorAll('.accordion-header');
+            headers.forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    if(content.style.display === 'block') {
+                        content.style.display = 'none';
+                    } else {
+                        document.querySelectorAll('.accordion-content').forEach(c => c.style.display = 'none');
+                        content.style.display = 'block';
+                    }
+                });
+            });
+
+            // Show/hide options input based on question type in add-question-form
+            const typeSelect = document.getElementById('type');
+            const optionsGroup = document.getElementById('options-group');
+
+            if(typeSelect) {
+                typeSelect.addEventListener('change', function() {
+                    if(this.value === 'single' || this.value === 'multiple') {
+                        optionsGroup.style.display = 'block';
+                    } else {
+                        optionsGroup.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>طراحی عطر شخصی‌سازی‌شده 🌿</h1>
+        <nav>
+            {% if page != 'login' and page != 'admin_dashboard' and page != 'admin_orders' %}
+                <a href="{{ url_for('home') }}">🏠 خانه</a>
+                <a href="{{ url_for('design') }}">🎨 طراحی</a>
+            {% endif %}
+            {% if 'admin_logged_in' in session %}
+                <a href="{{ url_for('admin_dashboard') }}">🔒 داشبورد</a>
+                <a href="{{ url_for('logout') }}">🚪 خروج</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">🔒 ورود به ادمین</a>
+            {% endif %}
+        </nav>
+    </header>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% if page == 'home' %}
+            <h2>خوش آمدید به تجربه عطرسازی شخصی‌سازی‌شده! 💖</h2>
+            <p>با پاسخ دادن به چند سوال ساده، عطری بسازید که واقعاً شما را نمایندگی کند.</p>
+            <form action="{{ url_for('design') }}" method="get">
+                <button type="submit" class="submit-btn">شروع به طراحی 🛠️</button>
+            </form>
+        {% elif page == 'login' %}
+            <h2>🔒 ورود به ادمین</h2>
+            <form action="{{ url_for('login') }}" method="post">
+                <div class="form-group">
+                    <label for="username">نام کاربری:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">رمز عبور:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">ورود</button>
+            </form>
+        {% elif page == 'design' %}
+            <h2>🎨 طراحی عطر شما</h2>
+            <form action="{{ url_for('design') }}" method="post">
+                {% for question in questions %}
+                    <div class="form-group">
+                        <label for="{{ question.id }}">{{ question.text }}</label>
+                        {% if question.type == 'single' %}
+                            <select id="{{ question.id }}" name="{{ question.id }}" required>
+                                <option value="" disabled selected>انتخاب کنید</option>
+                                {% for option in question.options %}
+                                    <option value="{{ option }}">{{ option }}</option>
+                                {% endfor %}
+                            </select>
+                        {% elif question.type == 'multiple' %}
+                            <div class="checkbox-group">
+                                {% for option in question.options %}
+                                    <label>
+                                        <input type="checkbox" name="{{ question.id }}" value="{{ option }}">
+                                        {{ option }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        {% elif question.type == 'text' %}
+                            <input type="text" id="{{ question.id }}" name="{{ question.id }}" placeholder="پاسخ خود را اینجا تایپ کنید">
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="form-group">
+                    <label for="bottle_size">📦 حجم عطر:</label>
+                    <select id="bottle_size" name="bottle_size" required>
+                        <option value="" disabled selected>انتخاب کنید</option>
+                        <option value="35">۳۵ میلی‌لیتر</option>
+                        <option value="50">۵۰ میلی‌لیتر</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gift">🎁 هدیه:</label>
+                    <input type="checkbox" id="gift" name="gift">
+                </div>
+                <div class="form-group">
+                    <label for="note">📝 یادداشت:</label>
+                    <textarea id="note" name="note" placeholder="اگر عطر هدیه است، یادداشت خود را اضافه کنید."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">تولید عطر 🧪</button>
+            </form>
+        {% elif page == 'result' %}
+            <h2>✨ عطر شخصی شما ✨</h2>
+            <div class="result">
+                <p>{{ order.user_description }}</p>
+                <p>💰 قیمت: {{ order.price }} تومان</p>
+            </div>
+            <form action="{{ url_for('payment', order_id=order._id) }}" method="post">
+                <button type="submit" class="submit-btn">پرداخت 💳</button>
+            </form>
+        {% elif page == 'confirmation' %}
+            <h2>✅ سفارش تایید شد</h2>
+            <p>از خرید شما متشکریم! عطر شخصی شما در حال آماده‌سازی است. 🎉</p>
+        {% elif page == 'admin_dashboard' %}
+            <h2>🔒 داشبورد ادمین</h2>
+            <section>
+                <h3>📄 آپلود سوالات</h3>
+                <form action="{{ url_for('upload_questions') }}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="file" id="file" name="file" accept=".xlsx" required>
+                    </div>
+                    <button type="submit" class="upload-btn">آپلود 📤</button>
+                </form>
+            </section>
+            <section class="add-question-form">
+                <h3>➕ افزودن سوال جدید</h3>
+                <form action="{{ url_for('add_question') }}" method="post">
+                    <div class="form-group">
+                        <label for="id">شناسه سوال:</label>
+                        <input type="text" id="id" name="id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="text">متن سوال:</label>
+                        <input type="text" id="text" name="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">نوع سوال:</label>
+                        <select id="type" name="type" required>
+                            <option value="" disabled selected>انتخاب کنید</option>
+                            <option value="single">انتخاب تک</option>
+                            <option value="multiple">انتخاب چندگانه</option>
+                            <option value="text">متن</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="options-group" style="display: none;">
+                        <label for="options">گزینه‌ها (با کاما جدا کنید):</label>
+                        <input type="text" id="options" name="options" placeholder="مثلاً گزینه اول, گزینه دوم, ...">
+                    </div>
+                    <button type="submit" class="submit-btn">افزودن سوال ➕</button>
+                </form>
+            </section>
+            <section>
+                <h3>📝 مدیریت سوالات</h3>
+                <div class="accordion">
+                    {% for question in questions %}
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>{{ question.text }}</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <form action="{{ url_for('edit_question', question_id=question.id) }}" method="post">
+                                    <div class="form-group">
+                                        <label for="text_{{ question.id }}">متن سوال:</label>
+                                        <input type="text" id="text_{{ question.id }}" name="text" value="{{ question.text }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="type_{{ question.id }}">نوع سوال:</label>
+                                        <select id="type_{{ question.id }}" name="type" required>
+                                            <option value="single" {% if question.type == 'single' %}selected{% endif %}>انتخاب تک</option>
+                                            <option value="multiple" {% if question.type == 'multiple' %}selected{% endif %}>انتخاب چندگانه</option>
+                                            <option value="text" {% if question.type == 'text' %}selected{% endif %}>متن</option>
+                                        </select>
+                                    </div>
+                                    {% if question.type in ['single', 'multiple'] %}
+                                        <div class="form-group">
+                                            <label for="options_{{ question.id }}">گزینه‌ها (با کاما جدا کنید):</label>
+                                            <input type="text" id="options_{{ question.id }}" name="options" value="{{ question.options | join(', ') }}" placeholder="مثلاً گزینه اول, گزینه دوم, ...">
+                                        </div>
+                                    {% endif %}
+                                    <button type="submit" class="submit-btn">بروزرسانی ✏️</button>
+                                </form>
+                                <form action="{{ url_for('delete_question', question_id=question.id) }}" method="post" style="margin-top: 10px;">
+                                    <button type="submit" class="submit-btn" style="background-color: #ff4757;">حذف ❌</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <section>
+                <h3>💰 مدیریت قیمت‌گذاری</h3>
+                <form action="{{ url_for('manage_pricing') }}" method="post" class="pricing-form">
+                    <div class="form-group">
+                        <label for="size">حجم عطر:</label>
+                        <select id="size" name="size" required>
+                            <option value="" disabled selected>انتخاب کنید</option>
+                            <option value="35">۳۵ میلی‌لیتر</option>
+                            <option value="50">۵۰ میلی‌لیتر</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">قیمت:</label>
+                        <input type="number" id="price" name="price" placeholder="قیمت را وارد کنید" required>
+                    </div>
+                    <button type="submit" class="submit-btn">بروزرسانی قیمت 💵</button>
+                </form>
+                <h4>قیمت‌های فعلی:</h4>
+                <ul>
+                    {% for item in pricing %}
+                        <li>🔹 {{ item.size }} میلی‌لیتر: {{ item.price }} تومان</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section>
+                <h3>📦 مشاهده سفارشات</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>شماره سفارش</th>
+                            <th>توضیح کاربر</th>
+                            <th>حجم</th>
+                            <th>هدیه</th>
+                            <th>یادداشت</th>
+                            <th>پرداخت شده</th>
+                            <th>فرمول</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order._id }}</td>
+                                <td>{{ order.user_description }}</td>
+                                <td>{{ order.size }} میلی‌لیتر</td>
+                                <td>{{ 'بله' if order.gift == 'yes' else 'خیر' }}</td>
+                                <td>{{ order.note if order.note else '---' }}</td>
+                                <td>{{ '✅' if order.paid else '❌' }}</td>
+                                <td>{{ order.admin_formula if order.admin_formula else '---' }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        {% elif page == 'admin_orders' %}
+            <h2>🔒 داشبورد ادمین</h2>
+        {% endif %}
+    </div>
+</body>
+</html>

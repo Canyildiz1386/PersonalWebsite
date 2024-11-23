@@ -1,1 +1,8 @@
-flask
+Flask
+Flask-PyMongo
+Flask-WTF
+WTForms
+flask-bcrypt
+flask-login
+pandas
+openai
